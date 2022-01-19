@@ -1,9 +1,9 @@
 package content
 
 type Page struct {
-	WindowTitle string `yaml:"window_title"`
-	Slug        string `yaml:"slug"`
-	Path        string `yaml:"path"`
+	WindowTitle string `yaml:"WindowTitle"`
+	Slug        string `yaml:"Slug"`
+	Path        string `yaml:"Path"`
 	Content     string
 }
 

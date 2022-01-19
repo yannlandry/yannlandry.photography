@@ -1,16 +1,12 @@
 package content
 
 import (
-	"fmt"
-	"io/ioutil"
-	"path/filepath"
-
-	"gopkg.in/yaml.v2"
+	"github.com/yannlandry/yannlandry.photography/util"
 )
 
 type NavigationLink struct {
-	Title string `yaml:"title"`
-	Link  string `yaml:"link"`
+	Title string `yaml:"Title"`
+	Link  string `yaml:"Link"`
 }
 
 type NavigationContent struct {
@@ -21,18 +17,10 @@ func NewNavigationContent() *NavigationContent {
 	return &NavigationContent {}
 }
 
-func (this *NavigationContent) Load(path string) error {
-	// Read YAML file
-	path = filepath.Join(path, "navigation.yaml")
-	content, err := ioutil.ReadFile(path)
+func (this *NavigationContent) Load(path *util.Path) error {
+	err := util.LoadYAML(path.With("navigation.yaml"), &this.Links)
 	if err != nil {
-		return fmt.Errorf("error loading `%s`: %s", path, err)
-	}
-
-	// Parse YAML
-	err = yaml.Unmarshal(content, &this.Links)
-	if err != nil {
-		return fmt.Errorf("error parsing YAML: %s", err)
+		return err
 	}
 
 	return nil

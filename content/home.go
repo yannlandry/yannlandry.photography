@@ -1,28 +1,35 @@
 package content
 
 import (
-	"fmt"
 	"html/template"
-	"path/filepath"
+
+	"github.com/yannlandry/yannlandry.photography/util"
 )
 
 type HomeContent struct {
 	Template *template.Template
+	Images   []string
 }
 
 func NewHomeContent() *HomeContent {
 	return &HomeContent {
-		nil,
+		Template: nil,
 	}
 }
 
-func (this *HomeContent) Load(path string) error {
-	path = filepath.Join(path, "home.html")
-
+func (this *HomeContent) Load(path *util.Path) error {
 	var err error
-	this.Template, err = template.ParseFiles(path)
+
+	// Load home page template
+	this.Template, err = util.LoadTemplate(path.With("home.html"))
 	if err != nil {
-		return fmt.Errorf("failed loading the template `%s`: %s", path, err)
+		return err
+	}
+
+	// Load home page slideshow images
+	err = util.LoadYAML(path.With("home.yaml"), &this.Images)
+	if err != nil {
+		return err
 	}
 
 	return nil

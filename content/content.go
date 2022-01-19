@@ -2,6 +2,8 @@ package content
 
 import (
 	"fmt"
+
+	"github.com/yannlandry/yannlandry.photography/util"
 )
 
 var (
@@ -9,7 +11,7 @@ var (
 )
 
 type WebsiteContent struct {
-	Path       string
+	Path       *util.Path
 	Navigation *NavigationContent
 	Home       *HomeContent
 	Blog       *BlogContent
@@ -17,24 +19,28 @@ type WebsiteContent struct {
 }
 
 func NewWebsiteContent() *WebsiteContent {
-	return &WebsiteContent {
-		"",
-		NewNavigationContent(),
-		NewHomeContent(),
-		nil,
-		nil,
+	return &WebsiteContent{
+		Path:       nil,
+		Navigation: NewNavigationContent(),
+		Home:       NewHomeContent(),
+		Blog:       NewBlogContent(),
+		Pages:      nil,
 	}
 }
 
 func (this *WebsiteContent) Load(path string) error {
-	this.Path = path
+	this.Path = util.NewPath(path)
 
 	if err := this.Navigation.Load(this.Path); err != nil {
-		return fmt.Errorf("error loading navigation: %s", err)
+		return fmt.Errorf("failed loading navigation: %s", err)
 	}
 
 	if err := this.Home.Load(this.Path); err != nil {
-		return fmt.Errorf("error loading home: %s", err)
+		return fmt.Errorf("failed loading home: %s", err)
+	}
+
+	if err := this.Blog.Load(this.Path); err != nil {
+		return fmt.Errorf("failed loading blog: %s", err)
 	}
 
 	return nil

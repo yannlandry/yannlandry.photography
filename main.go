@@ -34,6 +34,7 @@ func main() {
 	router.HandleFunc("/", handler.Home)
 	router.HandleFunc("/blog", handler.Blog)
 	router.HandleFunc("/blog/{slug}", handler.BlogPost)
+	router.HandleFunc("/blog/keyword/{keyword}", handler.BlogKeyword)
 	router.HandleFunc("/{page}", handler.Page)
 
 	// Server
