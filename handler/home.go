@@ -7,13 +7,11 @@ import (
 )
 
 type HomePresenter struct {
-	Navigation *content.NavigationContent
-	Images     []string
+	Images []string
 }
 
 func Home(response http.ResponseWriter, request *http.Request) {
-	content.Content.Home.Template.Execute(response, HomePresenter {
-		Navigation: content.Content.Navigation,
-		Images:     content.Content.Home.Images,
-	})
+	content.Content.Home.Template.Execute(response, NewBasePresenter(&HomePresenter{
+		Images: content.Content.Home.Images,
+	}))
 }

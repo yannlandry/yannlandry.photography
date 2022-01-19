@@ -17,11 +17,11 @@ func NewHomeContent() *HomeContent {
 	}
 }
 
-func (this *HomeContent) Load(path *util.Path) error {
+func (this *HomeContent) Load(path *util.Path, builder *util.TemplateBuilder) error {
 	var err error
 
 	// Load home page template
-	this.Template, err = util.LoadTemplate(path.With("home.html"))
+	this.Template, err = builder.Load(path.With("home.html"))
 	if err != nil {
 		return err
 	}

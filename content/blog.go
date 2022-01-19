@@ -39,15 +39,15 @@ func NewBlogContent() *BlogContent {
 	}
 }
 
-func (this *BlogContent) Load(path *util.Path) error {
+func (this *BlogContent) Load(path *util.Path, builder *util.TemplateBuilder) error {
 	var err error
 
-	this.Template, err = util.LoadTemplate(path.With("blog.html"))
+	this.Template, err = builder.Load(path.With("blog.html"))
 	if err != nil {
 		return err
 	}
 
-	this.TemplatePost, err = util.LoadTemplate(path.With("blogpost.html"))
+	this.TemplatePost, err = builder.Load(path.With("blogpost.html"))
 	if err != nil {
 		return err
 	}

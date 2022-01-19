@@ -10,16 +10,16 @@ import (
 )
 
 type BlogPresenter struct {
-	Posts []*content.BlogPost
-	Keywords map[string][]*content.BlogPost
+	Posts         []*content.BlogPost
+	Keywords      map[string][]*content.BlogPost
 	ActiveKeyword string
 }
 
 func Blog(response http.ResponseWriter, request *http.Request) {
-	content.Content.Blog.Template.Execute(response, BlogPresenter {
-		Posts: content.Content.Blog.Posts,
+	content.Content.Blog.Template.Execute(response, NewBasePresenter(&BlogPresenter{
+		Posts:    content.Content.Blog.Posts,
 		Keywords: content.Content.Blog.Keywords,
-	})
+	}))
 }
 
 type BlogPostPresenter struct {
@@ -36,9 +36,9 @@ func BlogPost(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	content.Content.Blog.TemplatePost.Execute(response, BlogPostPresenter {
+	content.Content.Blog.TemplatePost.Execute(response, NewBasePresenter(&BlogPostPresenter{
 		Post: post,
-	})
+	}))
 }
 
 func BlogKeyword(response http.ResponseWriter, request *http.Request) {
@@ -51,9 +51,9 @@ func BlogKeyword(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	content.Content.Blog.Template.Execute(response, BlogPresenter {
-		Posts: posts,
-		Keywords: content.Content.Blog.Keywords,
+	content.Content.Blog.Template.Execute(response, NewBasePresenter(&BlogPresenter{
+		Posts:         posts,
+		Keywords:      content.Content.Blog.Keywords,
 		ActiveKeyword: keyword,
-	})
+	}))
 }

@@ -2,7 +2,6 @@ package util
 
 import (
 	"fmt"
-	"html/template"
 	"io/ioutil"
 
 	"gopkg.in/yaml.v2"
@@ -25,12 +24,4 @@ func LoadYAML(path string, destination interface{}) error {
 		return fmt.Errorf("failed parsing `%s`: %s", path, err)
 	}
 	return nil
-}
-
-func LoadTemplate(path string) (*template.Template, error) {
-	tmp, err := template.ParseFiles(path)
-	if err != nil {
-		return nil, fmt.Errorf("failed loading template `%s`: %s", path, err)
-	}
-	return tmp, nil
 }
