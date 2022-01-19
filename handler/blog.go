@@ -16,10 +16,12 @@ type BlogPresenter struct {
 }
 
 func Blog(response http.ResponseWriter, request *http.Request) {
-	content.Content.Blog.Template.Execute(response, NewBasePresenter(&BlogPresenter{
+	presenter := NewBasePresenter(&BlogPresenter{
 		Posts:    content.Content.Blog.Posts,
 		Keywords: content.Content.Blog.Keywords,
-	}))
+	})
+	presenter.WindowTitle = "Blog"
+	content.Content.Blog.Template.Execute(response, presenter)
 }
 
 type BlogPostPresenter struct {
@@ -36,9 +38,11 @@ func BlogPost(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	content.Content.Blog.TemplatePost.Execute(response, NewBasePresenter(&BlogPostPresenter{
+	presenter := NewBasePresenter(&BlogPostPresenter{
 		Post: post,
-	}))
+	})
+	presenter.WindowTitle = post.WindowTitle
+	content.Content.Blog.TemplatePost.Execute(response, presenter)
 }
 
 func BlogKeyword(response http.ResponseWriter, request *http.Request) {
@@ -51,9 +55,11 @@ func BlogKeyword(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	content.Content.Blog.Template.Execute(response, NewBasePresenter(&BlogPresenter{
+	presenter := NewBasePresenter(&BlogPresenter{
 		Posts:         posts,
 		Keywords:      content.Content.Blog.Keywords,
 		ActiveKeyword: keyword,
-	}))
+	})
+	presenter.WindowTitle = "Blog: " + keyword
+	content.Content.Blog.Template.Execute(response, presenter)
 }

@@ -26,7 +26,7 @@ func NewWebsiteContent() *WebsiteContent {
 		Navigation: NewNavigationContent(),
 		Home:       NewHomeContent(),
 		Blog:       NewBlogContent(),
-		Pages:      nil,
+		Pages:      NewPagesContent(),
 	}
 }
 
@@ -45,6 +45,10 @@ func (this *WebsiteContent) Load(path string) error {
 
 	if err := this.Blog.Load(this.Path, this.Builder); err != nil {
 		return fmt.Errorf("failed loading blog: %s", err)
+	}
+
+	if err := this.Pages.Load(this.Path, this.Builder); err != nil {
+		return fmt.Errorf("failed loading pages: %s", err)
 	}
 
 	return nil

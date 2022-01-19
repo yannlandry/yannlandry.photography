@@ -23,5 +23,10 @@ func (this *NavigationContent) Load(path *util.Path) error {
 		return err
 	}
 
+	// Prepend base URL
+	for _, link := range this.Links {
+		link.Link = util.BaseURL.With(link.Link)
+	}
+
 	return nil
 }

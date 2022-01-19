@@ -11,7 +11,9 @@ type HomePresenter struct {
 }
 
 func Home(response http.ResponseWriter, request *http.Request) {
-	content.Content.Home.Template.Execute(response, NewBasePresenter(&HomePresenter{
+	presenter := NewBasePresenter(&HomePresenter{
 		Images: content.Content.Home.Images,
-	}))
+	})
+	presenter.WindowTitle = "yannlandry.photography"
+	content.Content.Home.Template.Execute(response, presenter)
 }

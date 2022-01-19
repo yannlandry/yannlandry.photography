@@ -15,14 +15,13 @@ type BlogPost struct {
 	Image       string    `yaml:"Image"`
 	Keywords    []string  `yaml:"Keywords"`
 	Path        string    `yaml:"Path"`
-	Content     string    // markdown-formatted content from `path`
+	Content     template.HTML    // markdown-formatted content from `path`
 	Summary     string    `yaml:"Summary"` // if empty, auto-generated from `Content`
 }
 
 type BlogContent struct {
 	Template        *template.Template
 	TemplatePost    *template.Template
-	TemplateKeyword *template.Template
 	Posts           []*BlogPost            // ordered list of posts
 	Slugs           map[string]*BlogPost   // slug -> blog post for individual display
 	Keywords        map[string][]*BlogPost // keyword -> ordered list of posts
@@ -32,7 +31,6 @@ func NewBlogContent() *BlogContent {
 	return &BlogContent{
 		Template:        nil,
 		TemplatePost:    nil,
-		TemplateKeyword: nil,
 		Posts:           []*BlogPost{},
 		Slugs:           map[string]*BlogPost{},
 		Keywords:        map[string][]*BlogPost{},
@@ -58,7 +56,10 @@ func (this *BlogContent) Load(path *util.Path, builder *util.TemplateBuilder) er
 	}
 
 	for _, post := range this.Posts {
-		if err := loadContent(path, post); err != nil {
+		if post.WindowTitle == "" {
+			post.WindowTitle = post.Title
+		}
+		if err := post.LoadContent(path); err != nil {
 			return err
 		}
 		this.addToSlugs(post)
@@ -68,12 +69,12 @@ func (this *BlogContent) Load(path *util.Path, builder *util.TemplateBuilder) er
 	return nil
 }
 
-func loadContent(path *util.Path, post *BlogPost) error {
-	content, err := util.LoadFile(path.With(post.Path))
+func (this *BlogPost) LoadContent(path *util.Path) error {
+	content, err := util.LoadFile(path.With(this.Path))
 	if err != nil {
 		return err
 	}
-	post.Content = string(content)
+	this.Content = template.HTML(util.Markdown.Render(content))
 	return nil
 }
 
