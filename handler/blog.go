@@ -1,8 +1,6 @@
 package handler
 
 import (
-	"fmt"
-	"io"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -24,23 +22,17 @@ func Blog(response http.ResponseWriter, request *http.Request) {
 	content.Content.Blog.Template.Execute(response, presenter)
 }
 
-type BlogPostPresenter struct {
-	Post *content.BlogPost
-}
-
 func BlogPost(response http.ResponseWriter, request *http.Request) {
 	variables := mux.Vars(request)
 	slug := variables["slug"]
 
 	post, ok := content.Content.Blog.Slugs[slug]
 	if !ok {
-		io.WriteString(response, fmt.Sprintf("404 Blog Post: %s", slug))
+		Error404(response, request)
 		return
 	}
 
-	presenter := NewBasePresenter(&BlogPostPresenter{
-		Post: post,
-	})
+	presenter := NewBasePresenter(post)
 	presenter.WindowTitle = post.WindowTitle
 	content.Content.Blog.TemplatePost.Execute(response, presenter)
 }
@@ -51,7 +43,7 @@ func BlogKeyword(response http.ResponseWriter, request *http.Request) {
 
 	posts, ok := content.Content.Blog.Keywords[keyword]
 	if !ok {
-		io.WriteString(response, fmt.Sprintf("404 Blog Keyword: %s", keyword))
+		Error404(response, request)
 		return
 	}
 

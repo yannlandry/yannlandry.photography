@@ -17,6 +17,7 @@ type WebsiteContent struct {
 	Home       *HomeContent
 	Blog       *BlogContent
 	Pages      *PagesContent
+	Error      *ErrorContent
 }
 
 func NewWebsiteContent() *WebsiteContent {
@@ -27,12 +28,12 @@ func NewWebsiteContent() *WebsiteContent {
 		Home:       NewHomeContent(),
 		Blog:       NewBlogContent(),
 		Pages:      NewPagesContent(),
+		Error:      NewErrorContent(),
 	}
 }
 
 func (this *WebsiteContent) Load(path string) error {
 	this.Path = util.NewPath(path)
-
 	this.Builder = util.NewTemplateBuilder(this.Path.With("base.html"))
 
 	if err := this.Navigation.Load(this.Path); err != nil {
@@ -49,6 +50,10 @@ func (this *WebsiteContent) Load(path string) error {
 
 	if err := this.Pages.Load(this.Path, this.Builder); err != nil {
 		return fmt.Errorf("failed loading pages: %s", err)
+	}
+
+	if err := this.Error.Load(this.Path, this.Builder); err != nil {
+		return fmt.Errorf("failed loading error pages: %s", err)
 	}
 
 	return nil

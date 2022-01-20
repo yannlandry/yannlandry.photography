@@ -38,6 +38,7 @@ func NewBlogContent() *BlogContent {
 }
 
 func (this *BlogContent) Load(path *util.Path, builder *util.TemplateBuilder) error {
+	path = util.NewPath(path.With("blog"))
 	var err error
 
 	this.Template, err = builder.Load(path.With("blog.html"))

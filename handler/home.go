@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/yannlandry/yannlandry.photography/content"
@@ -15,5 +16,7 @@ func Home(response http.ResponseWriter, request *http.Request) {
 		Images: content.Content.Home.Images,
 	})
 	presenter.WindowTitle = "yannlandry.photography"
-	content.Content.Home.Template.Execute(response, presenter)
+	if err := content.Content.Home.Template.Execute(response, presenter); err != nil {
+		fmt.Printf("Error executing template: %s\n", err)
+	}
 }

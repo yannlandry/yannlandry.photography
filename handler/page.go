@@ -1,8 +1,6 @@
 package handler
 
 import (
-	"fmt"
-	"io"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -15,7 +13,7 @@ func Page(response http.ResponseWriter, request *http.Request) {
 
 	page, ok := content.Content.Pages.Pages[slug]
 	if !ok {
-		io.WriteString(response, fmt.Sprintf("404 Page: %s", slug))
+		Error404(response, request)
 		return
 	}
 
