@@ -41,10 +41,9 @@ func (this *MarkdownEngine) Render(content []byte) []byte {
 func enhance(writer io.Writer, node mdast.Node, entering bool) (mdast.WalkStatus, bool) {
 	if h, ok := node.(*mdast.Heading); ok && entering {
 		// Add permalinks to all headings
-		text := &mdast.Text{}
-		text.Leaf.Literal = []byte("permalink")
-		permalink := &mdast.Link{Destination: []byte("#" + h.HeadingID)}
-		permalink.SetChildren([]mdast.Node{text})
+		permalink := &mdast.Link{}
+		permalink.Destination = []byte("#" + h.HeadingID)
+		permalink.AdditionalAttributes = []string{"class=\"permalink\""}
 		children := h.GetChildren()
 		children = append(children, permalink)
 		h.SetChildren(children)

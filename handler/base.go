@@ -6,7 +6,6 @@ import (
 
 type BasePresenter struct {
 	WindowTitle string
-	Stylesheets []string
 	Navigation  *content.NavigationContent
 	Content     interface{}
 }
