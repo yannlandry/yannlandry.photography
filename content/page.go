@@ -15,13 +15,13 @@ type Page struct {
 
 type PagesContent struct {
 	Template *template.Template
-	Pages map[string]*Page
+	Pages    map[string]*Page
 }
 
 func NewPagesContent() *PagesContent {
 	return &PagesContent{
 		Template: nil,
-		Pages: map[string]*Page{},
+		Pages:    map[string]*Page{},
 	}
 }
 

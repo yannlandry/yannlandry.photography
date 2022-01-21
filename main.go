@@ -50,7 +50,7 @@ func main() {
 	if err := content.Content.Load(contentPath); err != nil {
 		log.Fatalf("Failed loading the website content: %s\n", err)
 	}
-	log.Println("Done loading configuration.")
+	log.Println("Done loading content.")
 
 	// Router
 	router := mux.NewRouter()

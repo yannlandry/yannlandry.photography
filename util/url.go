@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	BaseURL *URLBuilder
+	BaseURL   *URLBuilder
 	StaticURL *URLBuilder
 )
 

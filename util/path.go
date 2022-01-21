@@ -9,7 +9,7 @@ type Path struct {
 }
 
 func NewPath(base string) *Path {
-	return &Path {
+	return &Path{
 		base: base,
 	}
 }

@@ -23,14 +23,14 @@ func PrettyDate(date time.Time) string {
 		// Friendly date formats
 		if day == today {
 			return "today"
-		} else if day + 1 == today {
+		} else if day+1 == today {
 			return "yesterday"
-		} else if day + 7 > today {
-			return fmt.Sprintf("%d days ago", today - day)
-		} else if day + 14 > today {
+		} else if day+7 > today {
+			return fmt.Sprintf("%d days ago", today-day)
+		} else if day+14 > today {
 			return "a week ago"
-		} else if day + 35 > today {
-			return fmt.Sprintf("%d weeks ago", (today - day) / 7)
+		} else if day+35 > today {
+			return fmt.Sprintf("%d weeks ago", (today-day)/7)
 		}
 
 		// Posted this year

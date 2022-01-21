@@ -14,7 +14,7 @@ type NavigationContent struct {
 }
 
 func NewNavigationContent() *NavigationContent {
-	return &NavigationContent {}
+	return &NavigationContent{}
 }
 
 func (this *NavigationContent) Load(path *util.Path) error {

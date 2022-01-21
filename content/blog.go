@@ -8,32 +8,32 @@ import (
 )
 
 type BlogPost struct {
-	Title       string    `yaml:"Title"`       // title to display in the page, supports markdown
-	WindowTitle string    `yaml:"WindowTitle"` // if empty, use `title` with stripped HTML tags
-	Slug        string    `yaml:"Slug"`
-	Date        time.Time `yaml:"Date"`
-	Image       string    `yaml:"Image"`
-	Keywords    []string  `yaml:"Keywords"`
-	Path        string    `yaml:"Path"`
-	Content     template.HTML    // markdown-formatted content from `path`
-	Summary     string    `yaml:"Summary"` // if empty, auto-generated from `Content`
+	Title       string        `yaml:"Title"`       // title to display in the page, supports markdown
+	WindowTitle string        `yaml:"WindowTitle"` // if empty, use `title` with stripped HTML tags
+	Slug        string        `yaml:"Slug"`
+	Date        time.Time     `yaml:"Date"`
+	Image       string        `yaml:"Image"`
+	Keywords    []string      `yaml:"Keywords"`
+	Path        string        `yaml:"Path"`
+	Content     template.HTML // markdown-formatted content from `path`
+	Summary     string        `yaml:"Summary"` // if empty, auto-generated from `Content`
 }
 
 type BlogContent struct {
-	Template        *template.Template
-	TemplatePost    *template.Template
-	Posts           []*BlogPost            // ordered list of posts
-	Slugs           map[string]*BlogPost   // slug -> blog post for individual display
-	Keywords        map[string][]*BlogPost // keyword -> ordered list of posts
+	Template     *template.Template
+	TemplatePost *template.Template
+	Posts        []*BlogPost            // ordered list of posts
+	Slugs        map[string]*BlogPost   // slug -> blog post for individual display
+	Keywords     map[string][]*BlogPost // keyword -> ordered list of posts
 }
 
 func NewBlogContent() *BlogContent {
 	return &BlogContent{
-		Template:        nil,
-		TemplatePost:    nil,
-		Posts:           []*BlogPost{},
-		Slugs:           map[string]*BlogPost{},
-		Keywords:        map[string][]*BlogPost{},
+		Template:     nil,
+		TemplatePost: nil,
+		Posts:        []*BlogPost{},
+		Slugs:        map[string]*BlogPost{},
+		Keywords:     map[string][]*BlogPost{},
 	}
 }
 

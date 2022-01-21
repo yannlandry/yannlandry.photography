@@ -4,10 +4,10 @@ import (
 	"io"
 	"strings"
 
-	mdast "github.com/gomarkdown/markdown/ast"
 	mdcore "github.com/gomarkdown/markdown"
-        mdhtml "github.com/gomarkdown/markdown/html"
-        mdparser "github.com/gomarkdown/markdown/parser"
+	mdast "github.com/gomarkdown/markdown/ast"
+	mdhtml "github.com/gomarkdown/markdown/html"
+	mdparser "github.com/gomarkdown/markdown/parser"
 )
 
 var (
@@ -16,9 +16,9 @@ var (
 
 type MarkdownEngine struct {
 	extensions mdparser.Extensions
-	renderer *mdhtml.Renderer
-	baseURL *URLBuilder
-	staticURL *URLBuilder
+	renderer   *mdhtml.Renderer
+	baseURL    *URLBuilder
+	staticURL  *URLBuilder
 }
 
 func NewMarkdownEngine(baseURL *URLBuilder, staticURL *URLBuilder) *MarkdownEngine {
@@ -28,9 +28,9 @@ func NewMarkdownEngine(baseURL *URLBuilder, staticURL *URLBuilder) *MarkdownEngi
 
 	return &MarkdownEngine{
 		extensions: mdparser.CommonExtensions | mdparser.AutoHeadingIDs,
-		renderer: mdhtml.NewRenderer(options),
-		baseURL: baseURL,
-		staticURL: staticURL,
+		renderer:   mdhtml.NewRenderer(options),
+		baseURL:    baseURL,
+		staticURL:  staticURL,
 	}
 }
 
@@ -117,18 +117,18 @@ func addAttribute(node mdast.Node) {
 	if container := node.AsContainer(); container != nil {
 		if container.Attribute == nil {
 			container.Attribute = &mdast.Attribute{
-				ID: []byte{},
+				ID:      []byte{},
 				Classes: [][]byte{},
-				Attrs: map[string][]byte{},
+				Attrs:   map[string][]byte{},
 			}
 		}
 	} else if leaf := node.AsLeaf(); leaf != nil {
 		// NOTE: the renderer ignores `*Attribute` on `Leaf` instances, for whatever reason
 		if leaf.Attribute == nil {
 			leaf.Attribute = &mdast.Attribute{
-				ID: []byte{},
+				ID:      []byte{},
 				Classes: [][]byte{},
-				Attrs: map[string][]byte{},
+				Attrs:   map[string][]byte{},
 			}
 		}
 	}
