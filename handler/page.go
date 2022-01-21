@@ -19,5 +19,5 @@ func Page(response http.ResponseWriter, request *http.Request) {
 
 	presenter := NewBasePresenter(page)
 	presenter.WindowTitle = page.WindowTitle
-	content.Content.Pages.Template.Execute(response, presenter)
+	ExecuteTemplate(content.Content.Pages.Template, response, presenter)
 }

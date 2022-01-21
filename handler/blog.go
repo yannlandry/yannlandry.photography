@@ -19,7 +19,7 @@ func Blog(response http.ResponseWriter, request *http.Request) {
 		Keywords: content.Content.Blog.Keywords,
 	})
 	presenter.WindowTitle = "Blog"
-	content.Content.Blog.Template.Execute(response, presenter)
+	ExecuteTemplate(content.Content.Blog.Template, response, presenter)
 }
 
 func BlogPost(response http.ResponseWriter, request *http.Request) {
@@ -34,7 +34,7 @@ func BlogPost(response http.ResponseWriter, request *http.Request) {
 
 	presenter := NewBasePresenter(post)
 	presenter.WindowTitle = post.WindowTitle
-	content.Content.Blog.TemplatePost.Execute(response, presenter)
+	ExecuteTemplate(content.Content.Blog.TemplatePost, response, presenter)
 }
 
 func BlogKeyword(response http.ResponseWriter, request *http.Request) {
@@ -53,5 +53,5 @@ func BlogKeyword(response http.ResponseWriter, request *http.Request) {
 		ActiveKeyword: keyword,
 	})
 	presenter.WindowTitle = "Blog: " + keyword
-	content.Content.Blog.Template.Execute(response, presenter)
+	ExecuteTemplate(content.Content.Blog.Template, response, presenter)
 }

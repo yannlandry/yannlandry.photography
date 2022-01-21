@@ -3,7 +3,10 @@ package util
 import (
 	"fmt"
 	"html/template"
+	"net/url"
 	"path"
+	"strings"
+	"time"
 )
 
 type TemplateBuilder struct {
@@ -26,6 +29,21 @@ func (this *TemplateBuilder) Load(paths ...string) (*template.Template, error) {
 		},
 		"staticURL": func(extension string) string {
 			return StaticURL.With(extension)
+		},
+		"concat": func(elements ...string) string {
+			return strings.Join(elements, "")
+		},
+		"formatDate": func(date time.Time) string {
+			return FormatDate(date)
+		},
+		"plainDate": func(date time.Time) string {
+			return PlainDate(date)
+		},
+		"prettyDate": func(date time.Time) string {
+			return PrettyDate(date)
+		},
+		"urlEscape": func(text string) string {
+			return url.QueryEscape(text)
 		},
 	}
 

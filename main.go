@@ -2,9 +2,8 @@ package main
 
 import (
 	"flag"
-	"fmt"
+	"log"
 	"net/http"
-	"os"
 
 	"github.com/gorilla/mux"
 	"github.com/yannlandry/yannlandry.photography/content"
@@ -13,7 +12,7 @@ import (
 )
 
 func main() {
-	fmt.Fprintln(os.Stderr, "Starting yannlandry.photography...")
+	log.Println("Starting yannlandry.photography...")
 
 	// Command-line arguments
 	var contentPath string
@@ -26,27 +25,22 @@ func main() {
 
 	// Check command-line arguments
 	if contentPath == "" {
-		fmt.Fprintln(os.Stderr, "`--content-path` is a required argument.")
-		os.Exit(2)
+		log.Fatalln("`--content-path` is a required argument.")
 	}
 	if baseURL == "" {
-		fmt.Fprintln(os.Stderr, "`--base-url` is a required argument.")
-		os.Exit(2)
+		log.Fatalln("`--base-url` is a required argument.")
 	}
 	if staticURL == "" {
-		fmt.Fprintln(os.Stderr, "`--static-url` is a required argument.")
-		os.Exit(2)
+		log.Fatalln("`--static-url` is a required argument.")
 	}
 
 	// Instantiate `URLBuilder`s
 	var err error
 	if util.BaseURL, err = util.NewURLBuilder(baseURL); err != nil {
-		fmt.Fprintf(os.Stderr, "Failed parsing the base URL: %s\n", err)
-		os.Exit(1)
+		log.Fatalf("Failed parsing the base URL: %s\n", err)
 	}
 	if util.StaticURL, err = util.NewURLBuilder(staticURL); err != nil {
-		fmt.Fprintf(os.Stderr, "Failed parsing the static URL: %s\n", err)
-		os.Exit(1)
+		log.Fatalf("Failed parsing the static URL: %s\n", err)
 	}
 
 	// Instantiate markdown renderer
@@ -54,22 +48,24 @@ func main() {
 
 	// Load website content
 	if err := content.Content.Load(contentPath); err != nil {
-		fmt.Fprintf(os.Stderr, "Failed loading the website content: %s\n", err)
-		os.Exit(1)
+		log.Fatalf("Failed loading the website content: %s\n", err)
 	}
+	log.Println("Done loading configuration.")
 
 	// Router
 	router := mux.NewRouter()
 	router.HandleFunc("/", handler.Home)
 	router.HandleFunc("/blog", handler.Blog)
+	router.HandleFunc("/blog/", handler.Blog)
 	router.HandleFunc("/blog/{slug}", handler.BlogPost)
 	router.HandleFunc("/blog/keyword/{keyword}", handler.BlogKeyword)
 	router.HandleFunc("/{slug}", handler.Page)
+	router.HandleFunc("/{slug}/", handler.Page)
 
 	// Server
 	server := &http.Server{
 		Handler: router,
 		Addr:    ":8080",
 	}
-	fmt.Fprintln(os.Stderr, server.ListenAndServe())
+	log.Println(server.ListenAndServe())
 }

@@ -12,7 +12,7 @@ type ErrorPresenter struct {
 
 func Error(response http.ResponseWriter, request *http.Request, code int) {
 	response.WriteHeader(code)
-	content.Content.Error.Template.Execute(response, NewBasePresenter(&ErrorPresenter {
+	ExecuteTemplate(content.Content.Error.Template, response, NewBasePresenter(&ErrorPresenter {
 		Code: code,
 	}))
 }
