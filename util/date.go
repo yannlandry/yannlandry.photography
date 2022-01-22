@@ -15,11 +15,10 @@ func PlainDate(date time.Time) string {
 
 func PrettyDate(date time.Time) string {
 	now := time.Now()
+	day := date.YearDay()
+	today := now.YearDay()
 
-	if date.Year() == now.Year() {
-		day := date.YearDay()
-		today := now.YearDay()
-
+	if date.Year() == now.Year() && day <= today {
 		// Friendly date formats
 		if day == today {
 			return "today"
@@ -37,6 +36,6 @@ func PrettyDate(date time.Time) string {
 		return fmt.Sprintf("on %d %s", date.Day(), date.Month().String())
 	}
 
-	// Posted in a past year
+	// Posted in a past year, or in the future
 	return fmt.Sprintf("on %s", PlainDate(date))
 }

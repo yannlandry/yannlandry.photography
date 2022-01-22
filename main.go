@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -21,6 +22,8 @@ func main() {
 	flag.StringVar(&baseURL, "base-url", "", "URL of the website to be prepended to links")
 	var staticURL string
 	flag.StringVar(&staticURL, "static-url", "", "URL of static assets to be prepended to images, stylesheets, etc.")
+	var port int
+	flag.IntVar(&port, "port", 8080, "Port on which the Golang app should listen")
 	flag.Parse()
 
 	// Check command-line arguments
@@ -65,7 +68,7 @@ func main() {
 	// Server
 	server := &http.Server{
 		Handler: router,
-		Addr:    ":8080",
+		Addr:    fmt.Sprintf(":%d", port),
 	}
 	log.Println(server.ListenAndServe())
 }
