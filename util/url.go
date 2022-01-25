@@ -39,3 +39,7 @@ func (this *URLBuilder) With(extension string) string {
 	full.Path = path.Join(full.Path, parsed.Path)
 	return full.String()
 }
+
+func (this *URLBuilder) Get() string {
+	return this.base.String()
+}

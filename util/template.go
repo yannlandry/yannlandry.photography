@@ -9,6 +9,10 @@ import (
 	"time"
 )
 
+var (
+	lastRestart = time.Now().Unix()
+)
+
 type TemplateBuilder struct {
 	base string
 }
@@ -44,6 +48,9 @@ func (this *TemplateBuilder) Load(paths ...string) (*template.Template, error) {
 		},
 		"urlEscape": func(text string) string {
 			return url.QueryEscape(text)
+		},
+		"lastRestart": func() int64 {
+			return lastRestart
 		},
 	}
 

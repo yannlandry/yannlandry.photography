@@ -61,7 +61,9 @@ func main() {
 	router.HandleFunc("/blog", handler.Blog)
 	router.HandleFunc("/blog/", handler.Blog)
 	router.HandleFunc("/blog/{slug}", handler.BlogPost)
+	router.HandleFunc("/blog/{slug}/", handler.BlogPost)
 	router.HandleFunc("/blog/keyword/{keyword}", handler.BlogKeyword)
+	router.HandleFunc("/blog/keyword/{keyword}/", handler.BlogKeyword)
 	router.HandleFunc("/{slug}", handler.Page)
 	router.HandleFunc("/{slug}/", handler.Page)
 

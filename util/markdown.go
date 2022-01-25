@@ -103,7 +103,12 @@ func processParagraph(p *mdast.Paragraph) {
 func processLink(a *mdast.Link) {
 	// Prepend all local URLs with the base URL, except anchor links
 	if len(a.Destination) > 0 && a.Destination[0] != '#' {
-		a.Destination = []byte(BaseURL.With(string(a.Destination)))
+		destination := BaseURL.With(string(a.Destination))
+		a.Destination = []byte(destination)
+		// If the link is external, open it in a new tab
+		if !strings.HasPrefix(destination, BaseURL.Get()) {
+			a.AdditionalAttributes = []string{"target=\"_blank\""}
+		}
 	}
 }
 
