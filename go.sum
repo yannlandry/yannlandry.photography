@@ -1,5 +1,7 @@
 github.com/gomarkdown/markdown v0.0.0-20220114203417-14399d5448c4 h1:6GlsnS3GQYfrJZTJEUsheoyLE6kLXQJDvQKIKxgL/9Q=
 github.com/gomarkdown/markdown v0.0.0-20220114203417-14399d5448c4/go.mod h1:JDGcbDT52eL4fju3sZ4TeHGsQwhG9nbDV21aMyhwPoA=
+github.com/gomarkdown/markdown v0.0.0-20230313173142-2ced44d5b584 h1:XaUmlCIi5hEY5GPUV6oXc5eytg9+FBH9/9fOKblHWEU=
+github.com/gomarkdown/markdown v0.0.0-20230313173142-2ced44d5b584/go.mod h1:JDGcbDT52eL4fju3sZ4TeHGsQwhG9nbDV21aMyhwPoA=
 github.com/gorilla/mux v1.8.0 h1:i40aqfkR1h2SlN9hojwV5ZA91wcXFOvkdNIeFDP5koI=
 github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=
